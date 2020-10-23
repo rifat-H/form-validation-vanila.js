@@ -14,17 +14,19 @@ function validate(formData) {
   let password = formData["password"];
   let confirm_p = formData["confirm_p"];
 
+  // validate empty all
+
+  isBlankAll([username, email, password, confirm_p]);
+
   // validate username
-  is_blank(username);
 
   // validate email
-  VEmail(email);
+  validateEmail(email);
+    
 
   // validate password
-  is_blank(password);
 
   // validate confirm_p
-  is_blank(confirm_p);
 }
 
 //
@@ -32,11 +34,6 @@ function validate(formData) {
 //
 //
 //
-function VEmail(email) {
-  is_blank(email);
-  validateEmail(email);
-}
-
 //
 //
 //
@@ -50,15 +47,21 @@ function validateEmail(el) {
   let valid = re.test(String(el.value).toLowerCase());
 
   if (!valid) {
-    showError(el, `${el.id} is Not Valid`);
+    showError(el, `${el.id.toUpperCase()} is Not Valid`);
   } else {
     showSuccess(el);
   }
 }
 
+function isBlankAll(elArr) {
+  elArr.forEach(function (el) {
+    is_blank(el);
+  });
+}
+
 function is_blank(el) {
   if (el.value === "") {
-    showError(el, `${el.id} is required`);
+    showError(el, `${el.id.toUpperCase()} is required`);
   } else {
     showSuccess(el);
   }
